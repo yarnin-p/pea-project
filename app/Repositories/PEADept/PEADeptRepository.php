@@ -19,8 +19,11 @@ class PEADeptRepository extends BaseRepository implements IPEADeptRepository
 
     public function getPEAAllLevelDept()
     {
-        return $this->PEADept::with(['PEASecondDepts' => function ($q) {
-            $q->select('id', 'pea_dept_id', 'name');
+        return $this->PEADept::with(['PEASecondDepts' => function ($PEASecondQuery) {
+            $PEASecondQuery->select('id', 'pea_dept_id', 'name')
+                ->with(['PEAThirdDepts' => function ($PEAThirdQuery) {
+                    $PEAThirdQuery->select('id', 'pea_dept_id', 'name');
+                }]);
         }])->get();
     }
 }

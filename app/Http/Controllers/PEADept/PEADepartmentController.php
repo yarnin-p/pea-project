@@ -5,8 +5,6 @@ namespace App\Http\Controllers\PEADept;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PEADept\StorePeaDepartmentRequest;
 use App\Http\Resources\PEADept\PEADeptResourceCollection;
-use App\Models\PEASecondDept;
-use App\Models\PEAThirdDept;
 use App\Services\PEADept\IPEAService;
 use Illuminate\Http\Request;
 use App\Models\PEADept;
@@ -30,32 +28,17 @@ class PEADepartmentController extends Controller
      */
     public function index()
     {
+        $results = [];
         $peaDepartments = $this->PEADeptService->listPEADept();
-        dd($peaDepartments);
-//        $peaDepartments = PEADept::get()->toArray();
-//        $peaDeptData = [];
-//        if ($peaDepartments) {
-//            foreach ($peaDepartments as $key => $peaDepartment) {
-//                $peaDeptData['pea_first'][$key] = $peaDepartment;
-//                $peaDeptData['pea_first'][$key]['pea_second'] = [];
-//                $peaSecDepartments = PEASecondDept::where('pea_dept_id', $peaDepartment['id'])->get()->toArray();
-//                if ($peaSecDepartments) {
-//                    foreach ($peaSecDepartments as $skey => $peaSecDepartment) {
-//                        $peaDeptData['pea_first'][$key]['pea_second'][$skey] = $peaSecDepartment;
-//                        $peaThirdDepartments = PEAThirdDept::where('pea_dept_id', $peaSecDepartment['id'])
-//                            ->get()->toArray();
-//                        $peaDeptData['pea_first'][$key]['pea_second'][$skey]['pea_third'] = $peaThirdDepartments;
-//                    }
-//                }
-//            }
-//        }
+        if (!$peaDepartments->isEmpty()) {
+            $results = new PEADeptResourceCollection($peaDepartments);
+        }
 
-        $data = new PEADeptResourceCollection($peaDepartments);
         return response()->json([
             'success' => true,
             'code' => 200,
             'message' => 'Successfully',
-            'data' => $data
+            'data' => $results
         ]);
     }
 
