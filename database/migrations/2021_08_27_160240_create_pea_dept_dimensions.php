@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePeaThirdDepartments extends Migration
+class CreatePeaDeptDimensions extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,12 @@ class CreatePeaThirdDepartments extends Migration
      */
     public function up()
     {
-        Schema::create('pea_third_departments', function (Blueprint $table) {
+        Schema::create('pea_dept_dimensions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pea_dept_id');
+            $table->unsignedBigInteger('dimension_parent_id');
             $table->string('name');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-            $table->softDeletes();
-            $table->foreign('pea_dept_id')->references('id')->on('pea_second_departments')->onDelete('cascade');
         });
     }
 
@@ -32,6 +30,6 @@ class CreatePeaThirdDepartments extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pea_third_departments');
+        Schema::dropIfExists('pea_dept_dimensions');
     }
 }

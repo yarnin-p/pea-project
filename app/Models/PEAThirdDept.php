@@ -18,4 +18,16 @@ class PEAThirdDept extends Model
     protected $fillable = [
         'id', 'pea_dept_id', 'created_at', 'updated_at', 'deleted_at'
     ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime'
+    ];
+
+
+    public function PEASecondDept()
+    {
+        return $this->hasOne(PEASecondDept::class, 'id', 'pea_dept_id');
+    }
 }

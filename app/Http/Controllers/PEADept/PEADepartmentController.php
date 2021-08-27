@@ -1,16 +1,27 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\PEADept;
 
-use App\Http\Requests\PeaDepartment\StorePeaDepartmentRequest;
-use Carbon\Carbon;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PEADept\StorePeaDepartmentRequest;
+use App\Http\Resources\PEADept\PEADeptResourceCollection;
+use App\Models\PEASecondDept;
+use App\Models\PEAThirdDept;
+use App\Services\PEADept\IPEAService;
 use Illuminate\Http\Request;
 use App\Models\PEADept;
 use Illuminate\Support\Facades\Log;
-use Prophecy\Exception\Doubler\ClassNotFoundException;
 
-class PeaDepartmentController extends Controller
+class PEADepartmentController extends Controller
 {
+
+    private IPEAService $PEADeptService;
+
+    public function __construct(IPEAService $PEADeptService)
+    {
+        $this->PEADeptService = $PEADeptService;
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -19,12 +30,32 @@ class PeaDepartmentController extends Controller
      */
     public function index()
     {
-        $peaDepartments = PEADept::all()->toArray();
+        $peaDepartments = $this->PEADeptService->listPEADept();
+        dd($peaDepartments);
+//        $peaDepartments = PEADept::get()->toArray();
+//        $peaDeptData = [];
+//        if ($peaDepartments) {
+//            foreach ($peaDepartments as $key => $peaDepartment) {
+//                $peaDeptData['pea_first'][$key] = $peaDepartment;
+//                $peaDeptData['pea_first'][$key]['pea_second'] = [];
+//                $peaSecDepartments = PEASecondDept::where('pea_dept_id', $peaDepartment['id'])->get()->toArray();
+//                if ($peaSecDepartments) {
+//                    foreach ($peaSecDepartments as $skey => $peaSecDepartment) {
+//                        $peaDeptData['pea_first'][$key]['pea_second'][$skey] = $peaSecDepartment;
+//                        $peaThirdDepartments = PEAThirdDept::where('pea_dept_id', $peaSecDepartment['id'])
+//                            ->get()->toArray();
+//                        $peaDeptData['pea_first'][$key]['pea_second'][$skey]['pea_third'] = $peaThirdDepartments;
+//                    }
+//                }
+//            }
+//        }
+
+        $data = new PEADeptResourceCollection($peaDepartments);
         return response()->json([
             'success' => true,
             'code' => 200,
             'message' => 'Successfully',
-            'data' => $peaDepartments
+            'data' => $data
         ]);
     }
 
@@ -42,7 +73,7 @@ class PeaDepartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\PeaDepartment\StorePeaDepartmentRequest $request
+     * @param \App\Http\Requests\PEADept\StorePeaDepartmentRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(StorePeaDepartmentRequest $request)

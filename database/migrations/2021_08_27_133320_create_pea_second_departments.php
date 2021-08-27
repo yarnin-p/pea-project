@@ -21,6 +21,7 @@ class CreatePeaSecondDepartments extends Migration
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
+            $table->foreign('pea_dept_id')->references('id')->on('pea_departments')->onDelete('cascade');
         });
     }
 

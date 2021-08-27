@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\PeaDepartment;
+namespace App\Http\Requests\PEADept;
 
 use App\Models\PEADept;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StorePeaDepartmentRequest extends FormRequest
+class StorePEADepartmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\PeaDepartmentController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\PEADept\PEADepartmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::prefix('v1/')->name('auth.')->group(function () {
+    Route::post('register', [AuthController::class, 'register'])->name('register');
+    Route::post('login', [AuthController::class, 'login'])->name('login');
+});
 
-Route::post('register', 'AuthController@register');
-Route::post('login', 'AuthController@login');
-
-
-Route::resource('pea-departments', 'PeaDepartmentController')->middleware(['api.auth', 'auth:api']);
+Route::apiResource('pea-departments', 'PEADept\PEADepartmentController');
+//    ->middleware(['api.auth', 'auth:api']);

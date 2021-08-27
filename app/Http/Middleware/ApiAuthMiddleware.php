@@ -17,10 +17,7 @@ class ApiAuthMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        auth()->check();
-
-
-
+//        auth()->check();
         return $next($request);
     }
 }
