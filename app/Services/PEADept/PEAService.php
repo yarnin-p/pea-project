@@ -8,6 +8,7 @@ use App\Models\PEADept;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\PEADept\IPEADeptRepository;
 use App\Repositories\PEADept\PEADeptRepository;
+use http\Exception\BadMessageException;
 
 class PEAService implements IPEAService
 {
@@ -26,8 +27,17 @@ class PEAService implements IPEAService
         $this->PEADeptRepository = $PEADeptRepository;
     }
 
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
     public function listPEADept()
     {
-        return $this->PEADeptRepository->getPEAAllLevelDept();
+        try {
+            $PEAData = $this->PEADeptRepository->getPEAAllLevelDept();
+        } catch (\Illuminate\Database\QueryException $exception) {
+            throw new \Illuminate\Database\QueryException('', [], $exception);
+        }
+        return $PEAData;
     }
 }

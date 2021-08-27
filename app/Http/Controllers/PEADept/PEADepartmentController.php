@@ -28,18 +28,35 @@ class PEADepartmentController extends Controller
      */
     public function index()
     {
-        $results = [];
-        $peaDepartments = $this->PEADeptService->listPEADept();
+        try {
+            $peaDepartments = $this->PEADeptService->listPEADept();
+
+        } catch (\Illuminate\Database\QueryException $exception) {
+            Log::error('PEADepartmentController@index: [' . $exception->getCode() . '] ' . $exception->getMessage());
+            return response()->json([
+                'success' => false,
+                'code' => 500,
+                'message' => "Couldn't query PEA department",
+            ], 500);
+        }
+
+
         if (!$peaDepartments->isEmpty()) {
             $results = new PEADeptResourceCollection($peaDepartments);
+
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => 'Successfully',
+                'data' => $results
+            ]);
         }
 
         return response()->json([
-            'success' => true,
-            'code' => 200,
-            'message' => 'Successfully',
-            'data' => $results
-        ]);
+            'success' => false,
+            'code' => 404,
+            'message' => 'No document(s) found',
+        ], 404);
     }
 
     /**
@@ -69,8 +86,8 @@ class PEADepartmentController extends Controller
                 'message' => 'Created',
                 'data' => (object)[],
             ], 201);
-        } catch (\Illuminate\Database\QueryException $ex) {
-            Log::error('PeaDepartmentController@store: [' . $ex->getCode() . '] ' . $ex->getMessage());
+        } catch (\Illuminate\Database\QueryException $exception) {
+            Log::error('PEADepartmentController@store: [' . $exception->getCode() . '] ' . $exception->getMessage());
             return response()->json([
                 'success' => false,
                 'code' => 500,
