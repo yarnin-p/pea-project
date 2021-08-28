@@ -31,14 +31,7 @@ class PEADeptController extends Controller
     public function all()
     {
         try {
-//            $peaAllDepartments = PEADept::with(['PEASecondDepts' => function ($PEASecondQuery) {
-//                $PEASecondQuery->select('id', 'pea_dept_id', 'name')
-//                    ->with(['PEAThirdDepts' => function ($PEAThirdQuery) {
-//                        $PEAThirdQuery->select('id', 'pea_dept_id', 'name');
-//                    }]);
-//            }])->get();
             $PEAAllDepartments = $this->PEADeptService->listPEADept();
-
         } catch (QueryException $exception) {
             Log::error('PEADepartmentController@index: [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Couldn't query PEA department");
@@ -100,9 +93,13 @@ class PEADeptController extends Controller
         } catch (QueryException $exception) {
             Log::error('PEADepartmentController@show: [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Couldn't show PEA first level department with given ID");
-
         }
-        return Response::success(new PEAFirstDeptResource($PEAFirstDepartment));
+
+        if ($PEAFirstDepartment) {
+            return Response::success(new PEAFirstDeptResource($PEAFirstDepartment));
+        }
+
+        return Response::notFound('No document(s) found');
     }
 
     /**

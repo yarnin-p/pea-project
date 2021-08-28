@@ -22,7 +22,7 @@ Route::prefix('v1')->name('api.')->group(function () {
         Route::post('login', [AuthController::class, 'login'])->name('login');
     });
 
-    Route::name('pea-departments.')->prefix('pea-departments')->group(function () {
+    Route::middleware(['auth:api'])->name('pea-departments.')->prefix('pea-departments')->group(function () {
         Route::get('all', [PEADeptController::class, 'all'])->name('list-all-pea-dept');
 
         Route::name('first.')->prefix('first')->group(function () {
