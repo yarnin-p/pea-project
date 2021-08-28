@@ -8,10 +8,9 @@ use App\Http\Resources\PEADept\PEAAllDeptResourceCollection;
 use App\Http\Resources\PEADept\PEADeptResourceCollection;
 use App\Http\Resources\PEADept\PEAFirstDeptResource;
 use App\Services\PEADept\IPEAService;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Models\PEADept;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
@@ -40,7 +39,7 @@ class PEADeptController extends Controller
 //            }])->get();
             $PEAAllDepartments = $this->PEADeptService->listPEADept();
 
-        } catch (\Illuminate\Database\QueryException $exception) {
+        } catch (QueryException $exception) {
             Log::error('PEADepartmentController@index: [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Couldn't query PEA department");
         }
@@ -61,7 +60,7 @@ class PEADeptController extends Controller
     {
         try {
             $PEADepartments = $this->PEADeptService->listPEADept();
-        } catch (\Illuminate\Database\QueryException $exception) {
+        } catch (QueryException $exception) {
             Log::error('PEADepartmentController@index: [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Couldn't query PEA department");
         }
@@ -82,7 +81,7 @@ class PEADeptController extends Controller
     {
         try {
             PEADept::create($request->validated());
-        } catch (\Illuminate\Database\QueryException $exception) {
+        } catch (QueryException $exception) {
             Log::error('PEADepartmentController@store: [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Couldn't create PEA first level department");
         }
@@ -98,7 +97,7 @@ class PEADeptController extends Controller
     {
         try {
             $PEAFirstDepartment = PEADept::where('id', $id)->first();
-        } catch (\Illuminate\Database\QueryException $exception) {
+        } catch (QueryException $exception) {
             Log::error('PEADepartmentController@show: [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Couldn't show PEA first level department with given ID");
 
@@ -117,7 +116,7 @@ class PEADeptController extends Controller
 
         try {
             PEADept::where('id', $id)->update($validatedData);
-        } catch (\Illuminate\Database\QueryException $exception) {
+        } catch (QueryException $exception) {
             Log::error('PEADepartmentController@update: [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Update PEA first level department failed.");
         }
@@ -134,7 +133,7 @@ class PEADeptController extends Controller
     {
         try {
             PEADept::where('id', $id)->delete();
-        } catch (\Illuminate\Database\QueryException $exception) {
+        } catch (QueryException $exception) {
             Log::error('PEADepartmentController@destroy: [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Delete PEA first level department failed.");
         }

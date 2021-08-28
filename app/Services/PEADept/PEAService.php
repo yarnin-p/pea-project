@@ -3,12 +3,8 @@
 
 namespace App\Services\PEADept;
 
-
-use App\Models\PEADept;
-use App\Repositories\Base\BaseRepository;
 use App\Repositories\PEADept\IPEADeptRepository;
-use App\Repositories\PEADept\PEADeptRepository;
-use http\Exception\BadMessageException;
+use Illuminate\Database\QueryException;
 
 class PEAService implements IPEAService
 {
@@ -35,8 +31,8 @@ class PEAService implements IPEAService
     {
         try {
             $PEAData = $this->PEADeptRepository->getPEAAllLevelDept();
-        } catch (\Illuminate\Database\QueryException $exception) {
-            throw new \Illuminate\Database\QueryException('', [], $exception);
+        } catch (QueryException $exception) {
+            throw new QueryException('', [], $exception);
         }
         return $PEAData;
     }
@@ -46,8 +42,8 @@ class PEAService implements IPEAService
     {
         try {
             $PEAData = $this->PEADeptRepository->all();
-        } catch (\Illuminate\Database\QueryException $exception) {
-            throw new \Illuminate\Database\QueryException('', [], $exception);
+        } catch (QueryException $exception) {
+            throw new QueryException('', [], $exception);
         }
         return $PEAData;
     }
