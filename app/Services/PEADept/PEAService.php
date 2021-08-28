@@ -31,10 +31,21 @@ class PEAService implements IPEAService
      * @return mixed
      * @throws \Exception
      */
-    public function listPEADept()
+    public function listAllPEADept()
     {
         try {
             $PEAData = $this->PEADeptRepository->getPEAAllLevelDept();
+        } catch (\Illuminate\Database\QueryException $exception) {
+            throw new \Illuminate\Database\QueryException('', [], $exception);
+        }
+        return $PEAData;
+    }
+
+
+    public function listPEADept()
+    {
+        try {
+            $PEAData = $this->PEADeptRepository->all();
         } catch (\Illuminate\Database\QueryException $exception) {
             throw new \Illuminate\Database\QueryException('', [], $exception);
         }

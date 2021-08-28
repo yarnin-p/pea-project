@@ -14,22 +14,10 @@ class PEADeptResourceCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->map(function ($PEAFirstDepts) {
-            foreach ($PEAFirstDepts->PEASecondDepts as $secondDeptKey => $PEASecondDept) {
-                $PEASecondDeptsData[$secondDeptKey]['id'] = $PEASecondDept->id;
-                $PEASecondDeptsData[$secondDeptKey]['name'] = $PEASecondDept->name;
-
-                $PEASecondDeptsData[$secondDeptKey]['third_departments'] = [];
-                foreach ($PEASecondDept->PEAThirdDepts as $thirdDeptKey => $PEAThirdDept) {
-                    $PEASecondDeptsData[$secondDeptKey]['third_departments'][$thirdDeptKey]['id'] = $PEAThirdDept->id;
-                    $PEASecondDeptsData[$secondDeptKey]['third_departments'][$thirdDeptKey]['name'] = $PEAThirdDept->name;
-                }
-            }
-
+        return $this->collection->map(function ($PEADept) {
             return [
-                'id' => $PEAFirstDepts->id,
-                'name' => $PEAFirstDepts->name,
-                'second_departments' => $PEASecondDeptsData ?? [],
+                'id' => $PEADept->id,
+                'name' => $PEADept->name
             ];
         });
     }

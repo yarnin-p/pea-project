@@ -178,6 +178,7 @@ return [
 
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\ServiceServiceProvider::class,
+        App\Providers\ResponseAPIServiceProvider::class,
 
     ],
 
