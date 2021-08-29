@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PEADept\PEADeptController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,20 +21,38 @@ Route::prefix('v1')->name('api.')->group(function () {
         Route::post('login', [AuthController::class, 'login'])->name('login');
     });
 
-    Route::middleware(['auth:api'])->name('pea-departments.')->prefix('pea-departments')->group(function () {
-        Route::get('all', [PEADeptController::class, 'all'])->name('list-all-pea-dept');
+    Route::middleware(['auth:api'])->group(function () {
+        Route::name('pea-departments.')
+            ->prefix('pea-departments')
+            ->group(function () {
+                Route::get('all', [PEADeptController::class, 'all'])->name('list-all-pea-dept');
 
-        Route::name('first.')->prefix('first')->group(function () {
+                Route::name('first.')->prefix('first')->group(function () {
+                    Route::apiResource('', 'PEADept\PEADeptController')
+                        ->parameters(['' => 'id']);
+                });
 
-            Route::apiResource('', 'PEADept\PEADeptController')
-                ->parameters(['' => 'pea-dept-id']);
+                Route::name('second.')->prefix('second')->group(function () {
+                    Route::apiResource('', 'PEADept\PEASecondDeptController')
+                        ->parameters(['' => 'id']);
+                });
 
-//            Route::post('', [PEADeptController::class, 'show'])->name('store');
-//            Route::get('', [PEADeptController::class, 'index'])->name('all');
-//            Route::get('{pea-dept-id}', [PEADeptController::class, 'show'])->name('show');
-//            Route::put('{pea-dept-id}', [PEADeptController::class, 'show'])->name('update');
-//            Route::delete('{pea-dept-id}', [PEADeptController::class, 'show'])->name('delete');
+                Route::name('third.')->prefix('third')->group(function () {
+                    Route::apiResource('', 'PEADept\PEAThirdDeptController')
+                        ->parameters(['' => 'id']);
+                });
+            });
 
-        });
+        Route::name('department-dimensions.')
+            ->prefix('department-dimensions')
+            ->group(function () {
+                Route::apiResource('', 'PEADeptDimension\PEADeptDimensionController')
+                    ->parameters(['' => 'id']);
+
+                Route::name('files.')->prefix('files')->group(function () {
+                    Route::apiResource('', 'PEADeptDimension\PEADeptDimensionFileController')
+                        ->parameters(['' => 'id']);
+                });
+            });
     });
 });

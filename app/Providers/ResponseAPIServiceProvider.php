@@ -23,6 +23,7 @@ class ResponseAPIServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         Response::macro('success', function ($data) {
             return response()->json([
                 'success' => true,
@@ -56,7 +57,7 @@ class ResponseAPIServiceProvider extends ServiceProvider
             ]);
         });
 
-        Response::macro('error', function ($errMsg) {
+        Response::macro('error', function ($errMsg = "") {
             return response()->json([
                 'success' => false,
                 'code' => 500,
@@ -64,12 +65,28 @@ class ResponseAPIServiceProvider extends ServiceProvider
             ], 500);
         });
 
-        Response::macro('notFound', function ($errMsg) {
+        Response::macro('notFound', function ($errMsg = "") {
             return response()->json([
                 'success' => false,
                 'code' => 404,
                 'message' => $errMsg,
             ], 404);
+        });
+
+        Response::macro('forbidden', function ($errMsg = "") {
+            return response()->json([
+                'success' => false,
+                'code' => 403,
+                'message' => "Forbidden " . $errMsg ? ",$errMsg" : "",
+            ], 403);
+        });
+
+        Response::macro('unauthorized', function ($errMsg = "") {
+            return response()->json([
+                'success' => false,
+                'code' => 401,
+                'message' => "Unauthorized " . $errMsg ? ",$errMsg" : "",
+            ], 401);
         });
     }
 }

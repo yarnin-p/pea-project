@@ -5,9 +5,15 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AuthController extends Controller
 {
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function register(Request $request)
     {
         $validatedData = $request->validate([
@@ -16,16 +22,19 @@ class AuthController extends Controller
             'password' => 'required|confirmed|min:8',
         ]);
 
-
-        $validatedData['password'] = bcrypt($request->password);
-
+        $validatedData['password'] = bcrypt($request['password']);
         $user = User::create($validatedData);
 
-        $accessToken = $user->createToken('authToken')->accessToken;
-
-        return response(['user' => $user, 'access_token' => $accessToken]);
+        return Response::success([
+            'user' => $user,
+            'access_token' => $user->createToken('authToken')->accessToken
+        ]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function login(Request $request)
     {
         $loginData = $request->validate([
@@ -33,26 +42,13 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-
         if (!auth()->attempt($loginData)) {
-            return response(['message' => 'Invalid Credentials']);
+            return Response::unauthorized("invalid Credentials");
         }
 
-
-        $accessToken = auth()->user()->createToken('authToken')->accessToken;
-        return response(['user' => auth()->user(), 'access_token' => $accessToken]);
-
+        return Response::success([
+            'user' => auth()->user(),
+            'access_token' => auth()->user()->createToken('authToken')->accessToken
+        ]);
     }
-
-
-    public function getPeaDept() {
-        /*
-         * 1. select 16 สนง
-         * 2. loop 16 สนงเพื่อหาสำนักงาน กฟส
-         * 3. loop กฟส เพื่อหาสำนักงานย่อย
-         * 4. loop สำนักงานย่อยเพื่อหามิติเลเวลแรก
-         * 5. loop มิติเลเวลแรกเพื่อหามิติเลเวลที่สอง (where ที่ไอดีของมิติแรก)
-         */
-    }
-
 }
