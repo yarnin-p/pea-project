@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -36,6 +38,17 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+            if ($request->route()) {
+                if ($request->route()->parameters()) {
+                    return Response::notFound('Not found document(s) with given parameter(s)');
+                }
+            }
+
+            return Response::notFound('Route not found');
         });
     }
 }

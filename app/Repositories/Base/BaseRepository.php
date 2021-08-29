@@ -4,6 +4,7 @@
 namespace App\Repositories\Base;
 
 
+use App\Models\PEADept;
 use Illuminate\Database\Eloquent\Model;
 
 class BaseRepository implements IBaseRepository

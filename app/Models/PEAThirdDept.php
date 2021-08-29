@@ -16,7 +16,7 @@ class PEAThirdDept extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id', 'pea_dept_id', 'created_at', 'updated_at', 'deleted_at'
+        'id', 'pea_dept_id', 'name', 'created_at', 'updated_at', 'deleted_at'
     ];
 
     protected $casts = [
@@ -24,7 +24,6 @@ class PEAThirdDept extends Model
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime'
     ];
-
 
     public function PEASecondDept()
     {

@@ -45,7 +45,7 @@ class PEADeptController extends Controller
     public function all(Request $request)
     {
         try {
-            $PEAAllDepartments = $this->PEADeptService->listPEADept();
+            $PEAAllDepartments = $this->PEADeptService->listAllPEADept();
         } catch (QueryException $exception) {
             Log::error($this->ctrlName . '@' . $request->method() . ': [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Couldn't query PEA department");

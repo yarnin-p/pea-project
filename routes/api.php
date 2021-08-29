@@ -34,12 +34,12 @@ Route::prefix('v1')->name('api.')->group(function () {
 
                 Route::name('second.')->prefix('second')->group(function () {
                     Route::apiResource('', 'PEADept\PEASecondDeptController')
-                        ->parameters(['' => 'id']);
+                        ->parameters(['' => 'PEASecondDept']);
                 });
 
                 Route::name('third.')->prefix('third')->group(function () {
                     Route::apiResource('', 'PEADept\PEAThirdDeptController')
-                        ->parameters(['' => 'id']);
+                        ->parameters(['' => 'PEAThirdDept']);
                 });
             });
 

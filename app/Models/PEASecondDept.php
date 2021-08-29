@@ -25,13 +25,13 @@ class PEASecondDept extends Model
         'deleted_at' => 'datetime'
     ];
 
-    public function PEAThirdDepts()
-    {
-        return $this->hasMany(PEAThirdDept::class, 'pea_dept_id', 'id');
-    }
-
     public function PEAFirstDept()
     {
         return $this->hasOne(PEADept::class, 'id', 'pea_dept_id');
+    }
+
+    public function PEAThirdDepts()
+    {
+        return $this->hasMany(PEAThirdDept::class, 'pea_dept_id', 'id');
     }
 }

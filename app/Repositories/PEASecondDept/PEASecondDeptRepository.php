@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Repositories\PEADept;
+namespace App\Repositories\PEASecondDept;
 
 use App\Models\PEADept;
 use App\Repositories\Base\BaseRepository;

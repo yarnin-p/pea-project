@@ -26,7 +26,6 @@ class UpdatePEADepartmentRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
             'name' => [
                 'required',

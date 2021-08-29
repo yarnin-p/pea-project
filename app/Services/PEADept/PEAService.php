@@ -34,9 +34,9 @@ class PEAService implements IPEAService
         } catch (QueryException $exception) {
             throw new QueryException('', [], $exception);
         }
+
         return $PEAData;
     }
-
 
     public function listPEADept()
     {
