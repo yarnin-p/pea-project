@@ -85,8 +85,6 @@ class PEAAllDeptResourceCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-//        return $this->collection->map(function ($PEAFirstDepts) {
         return new PEADeptResourceCollection($this->collection);
-//        });
     }
 }
