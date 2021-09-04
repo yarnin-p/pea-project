@@ -85,7 +85,7 @@ class ResponseAPIServiceProvider extends ServiceProvider
             return response()->json([
                 'success' => false,
                 'code' => 401,
-                'message' => "Unauthorized " . $errMsg ? ",$errMsg" : "",
+                'message' => "Unauthorized " . $errMsg ? "Unauthorized, $errMsg" : "",
             ], 401);
         });
     }

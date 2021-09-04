@@ -14,10 +14,16 @@ class PEASecondDeptResourceCollection extends ResourceCollection
      */
     public function toArray($request)
     {
+
         return $this->collection->map(function ($PEASecondDept) {
             return [
                 'id' => $PEASecondDept->id,
-                'name' => $PEASecondDept->name
+                'name' => $PEASecondDept->name,
+                'created_at' => $PEASecondDept->created_at,
+                'updated_at' => $PEASecondDept->updated_at,
+                'third_departments' =>
+                    $this->when($PEASecondDept->relationLoaded('PEAThirdDepts'),
+                        new PEAThirdDeptResourceCollection($PEASecondDept->PEAThirdDepts))
             ];
         });
     }

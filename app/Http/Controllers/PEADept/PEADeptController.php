@@ -28,6 +28,7 @@ class PEADeptController extends Controller
      */
     private string $ctrlName;
 
+
     /**
      * PEADeptController constructor.
      * @param IPEAService $PEADeptService
@@ -39,8 +40,93 @@ class PEADeptController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return mixed
+     *  @OA\Get(
+     *      path="/pea-departments/all",
+     *      operationId="getAllLevelPEADepartments",
+     *      tags={"PEA Departments"},
+     *      summary="Get list of all level PEA departments",
+     *      security={ {"bearerAuth": {} }},
+     *      description="Returns list of all level PEA departments",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful Operation",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="success",
+     *                  type="boolean",
+     *                  example=true
+     *              ),
+     *              @OA\Property(
+     *                  property="code",
+     *                  type="integer",
+     *                  example=200
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Successfully"
+     *              ),
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="array",
+     *                  @OA\Items(ref="#/components/schemas/PEAAllDeptResourceCollection")
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Unauthenticated."
+     *              ),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Not found",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="success",
+     *                  type="boolean",
+     *                  example=false
+     *              ),
+     *              @OA\Property(
+     *                  property="code",
+     *                  type="integer",
+     *                  example=404
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Not found"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal server error",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="success",
+     *                  type="boolean",
+     *                  example=false
+     *              ),
+     *              @OA\Property(
+     *                  property="code",
+     *                  type="integer",
+     *                  example=500
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Internal server error"
+     *              )
+     *          )
+     *      )
+     *  )
      */
     public function all(Request $request)
     {

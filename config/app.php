@@ -179,6 +179,7 @@ return [
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\ServiceServiceProvider::class,
         App\Providers\ResponseAPIServiceProvider::class,
+        L5Swagger\L5SwaggerServiceProvider::class,
 
     ],
 
