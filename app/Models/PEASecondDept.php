@@ -13,8 +13,6 @@ class PEASecondDept extends Model
 
     protected $table = 'pea_second_departments';
 
-    protected $primaryKey = 'id';
-
     protected $fillable = [
         'id', 'pea_dept_id', 'name', 'created_at', 'updated_at', 'deleted_at'
     ];

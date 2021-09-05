@@ -11,8 +11,6 @@ class PEADeptDimensions extends Model
 
     protected $table = 'pea_dept_dimensions';
 
-    protected $primaryKey = 'id';
-
     protected $fillable = [
         'id', 'pea_dept_id', 'dimension_parent_id', 'name', 'created_at'
     ];

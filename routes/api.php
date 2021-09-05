@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\PEADept\PEADeptController;
+use App\Http\Controllers\PEADept\PEAFirstDeptController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,11 +25,11 @@ Route::prefix('v1')->name('api.')->group(function () {
         Route::name('pea-departments.')
             ->prefix('pea-departments')
             ->group(function () {
-                Route::get('all', [PEADeptController::class, 'all'])->name('list-all-pea-dept');
+                Route::get('all', [PEAFirstDeptController::class, 'all'])->name('list-all-pea-dept');
 
                 Route::name('first.')->prefix('first')->group(function () {
                     Route::apiResource('', 'PEADept\PEADeptController')
-                        ->parameters(['' => 'id']);
+                        ->parameters(['' => 'PEAFirstDept']);
                 });
 
                 Route::name('second.')->prefix('second')->group(function () {

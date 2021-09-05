@@ -32,27 +32,22 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessResource"
                                         },
-                                        "code": {
-                                            "type": "integer",
-                                            "example": 200
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Successfully"
-                                        },
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/PEAAllDeptResourceCollection"
-                                            }
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/PEAAllFirstDeptResourceCollection"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
-                                    },
-                                    "type": "object"
+                                    ]
                                 }
                             }
                         }
@@ -62,13 +57,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthenticated."
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
                                         }
-                                    },
-                                    "type": "object"
+                                    ]
                                 }
                             }
                         }
@@ -78,21 +71,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": false
-                                        },
-                                        "code": {
-                                            "type": "integer",
-                                            "example": 404
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Not found"
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
                                         }
-                                    },
-                                    "type": "object"
+                                    ]
                                 }
                             }
                         }
@@ -102,21 +85,1396 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": false
-                                        },
-                                        "code": {
-                                            "type": "integer",
-                                            "example": 500
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Internal server error"
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
                                         }
-                                    },
-                                    "type": "object"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pea-departments/first": {
+            "get": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Get list of first level PEA departments",
+                "description": "Returns list of first level PEA departments",
+                "operationId": "getAllFirstLevelPEADepartments",
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessResource"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/PEAFirstDeptResourceCollection"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Store first level PEA departments by given data",
+                "description": "Store first level PEA departments by given data",
+                "operationId": "storeFirstLevelPEADepartments",
+                "requestBody": {
+                    "description": "Store first level department by given data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StorePEAFirstDepartmentRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessWithNoDataResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnprocessableResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pea-departments/first/{PEAFirstDept}": {
+            "get": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Get first level PEA department by ID",
+                "description": "Get first level PEA department by ID",
+                "operationId": "getFirstLevelPEADepartmentByID",
+                "parameters": [
+                    {
+                        "name": "PEAFirstDept",
+                        "in": "path",
+                        "description": "ID of first level department that to be get",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessResource"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/PEAFirstDeptResourceCollection"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Update first level department by given ID and data that to be update",
+                "description": "Update first level department by given ID and data that to be update",
+                "operationId": "updateFirstLevelPEADepartments",
+                "parameters": [
+                    {
+                        "name": "PEAFirstDept",
+                        "in": "path",
+                        "description": "ID of first level department that to be filter",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update first level department by given ID and data that to be update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePEAFirstDepartmentRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessWithNoDataResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnprocessableResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Delete first level PEA department by ID",
+                "description": "Delete first level PEA department by ID",
+                "operationId": "deleteFirstLevelPEADepartmentByID",
+                "parameters": [
+                    {
+                        "name": "PEAFirstDept",
+                        "in": "path",
+                        "description": "ID of first level department that to be delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessWithNoDataResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pea-departments/second": {
+            "get": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Get list of second level PEA departments",
+                "description": "Returns list of second level PEA departments",
+                "operationId": "getAllSecondLevelPEADepartments",
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessResource"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/PEASecondDeptResourceCollection"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Store second level PEA departments by given data",
+                "description": "Store second level PEA departments by given data",
+                "operationId": "storeSecondLevelPEADepartments",
+                "requestBody": {
+                    "description": "Store second level department by given data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StorePEASecondDepartmentRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessWithNoDataResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnprocessableResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pea-departments/second/{PEASecondDept}": {
+            "get": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Get second level PEA department by ID",
+                "description": "Get second level PEA department by ID",
+                "operationId": "getSecondLevelPEADepartmentByID",
+                "parameters": [
+                    {
+                        "name": "PEASecondDept",
+                        "in": "path",
+                        "description": "ID of second level department that to be get",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessResource"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/PEASecondDeptResourceCollection"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Update second level department by given ID and data that to be update",
+                "description": "Update second level department by given ID and data that to be update",
+                "operationId": "updateSecondLevelPEADepartments",
+                "parameters": [
+                    {
+                        "name": "PEASecondDept",
+                        "in": "path",
+                        "description": "ID of second level department that to be filter",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update second level department by given ID and data that to be update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePEASecondDepartmentRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessWithNoDataResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnprocessableResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Delete second level PEA department by ID",
+                "description": "Delete second level PEA department by ID",
+                "operationId": "deleteSecondLevelPEADepartmentByID",
+                "parameters": [
+                    {
+                        "name": "PEASecondDept",
+                        "in": "path",
+                        "description": "ID of second level department that to be delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessWithNoDataResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pea-departments/third": {
+            "get": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Get list of third level PEA departments",
+                "description": "Returns list of third level PEA departments",
+                "operationId": "getAllThirdLevelPEADepartments",
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessResource"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/PEAThirdDeptResourceCollection"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Store third level PEA departments by given data",
+                "description": "Store third level PEA departments by given data",
+                "operationId": "storeThirdLevelPEADepartments",
+                "requestBody": {
+                    "description": "Store third level department by given data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StorePEAThirdDepartmentRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessWithNoDataResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnprocessableResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pea-departments/third/{PEAThirdDept}": {
+            "get": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Get third level PEA department by ID",
+                "description": "Get third level PEA department by ID",
+                "operationId": "getThirdLevelPEADepartmentByID",
+                "parameters": [
+                    {
+                        "name": "PEAThirdDept",
+                        "in": "path",
+                        "description": "ID of third level department that to be get",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessResource"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/PEAThirdDeptResourceCollection"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Update third level department by given ID and data that to be update",
+                "description": "Update third level department by given ID and data that to be update",
+                "operationId": "updateThirdLevelPEADepartments",
+                "parameters": [
+                    {
+                        "name": "PEAThirdDept",
+                        "in": "path",
+                        "description": "ID of third level department that to be filter",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update third level department by given ID and data that to be update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePEAThirdDepartmentRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessWithNoDataResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnprocessableResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pea-departments/second/{PEAThirdDept}": {
+            "delete": {
+                "tags": [
+                    "PEA Departments"
+                ],
+                "summary": "Delete third level PEA department by ID",
+                "description": "Delete third level PEA department by ID",
+                "operationId": "deleteThirdLevelPEADepartmentByID",
+                "parameters": [
+                    {
+                        "name": "PEAThirdDept",
+                        "in": "path",
+                        "description": "ID of third level department that to be delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessWithNoDataResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnauthenticatedResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -132,14 +1490,14 @@
     },
     "components": {
         "schemas": {
-            "PEAAllDeptResourceCollection": {
-                "title": "PEAAllDeptResourceCollection",
-                "description": "All level of PEA departments",
+            "PEAAllFirstDeptResourceCollection": {
+                "title": "PEAAllFirstDeptResourceCollection",
+                "description": "First level of PEA departments",
                 "properties": {
                     "id": {
                         "title": "ID",
                         "description": "ID",
-                        "type": "int",
+                        "type": "integer",
                         "example": 1
                     },
                     "name": {
@@ -148,44 +1506,538 @@
                         "type": "string",
                         "example": "การไฟฟ้านครราชสีมา"
                     },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "created_at",
+                        "type": "string",
+                        "example": "2021-09-05 12:00:00"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "updated_at",
+                        "type": "string",
+                        "example": "2021-09-06 12:00:00"
+                    },
                     "second_departments": {
-                        "title": "second departments",
-                        "description": "second departments",
+                        "title": "second_departments",
+                        "description": "second_departments",
                         "type": "array",
                         "items": {
-                            "properties": {
-                                "id": {
-                                    "type": "int",
-                                    "example": 1
-                                },
-                                "name": {
-                                    "type": "string",
-                                    "example": "การไฟฟ้าสุรนารี"
-                                },
-                                "third_departments": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "id": {
-                                                "type": "int",
-                                                "example": 1
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "example": "การไฟฟ้าสีคิ้ว"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            },
-                            "type": "object"
+                            "$ref": "#/components/schemas/PEAAllSecondDeptResourceCollection"
                         }
                     }
                 },
                 "type": "object",
                 "xml": {
-                    "name": "PEAAllDeptResourceCollection"
+                    "name": "PEAAllFirstDeptResourceCollection"
+                }
+            },
+            "PEAAllSecondDeptResourceCollection": {
+                "title": "PEAAllSecondDeptResourceCollection",
+                "description": "Second level of PEA departments",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "การไฟฟ้าสีคิ้ว"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "created_at",
+                        "type": "string",
+                        "example": "2021-09-05 12:00:00"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "updated_at",
+                        "type": "string",
+                        "example": "2021-09-06 12:00:00"
+                    },
+                    "third_departments": {
+                        "title": "third_departments",
+                        "description": "third_departments",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PEAAllThirdDeptResourceCollection"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "PEAAllSecondDeptResourceCollection"
+                }
+            },
+            "PEAAllThirdDeptResourceCollection": {
+                "title": "PEAAllThirdDeptResourceCollection",
+                "description": "Third level of PEA departments",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "การไฟฟ้าสุรนารี"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "created_at",
+                        "type": "string",
+                        "example": "2021-09-05 12:00:00"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "updated_at",
+                        "type": "string",
+                        "example": "2021-09-06 12:00:00"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "PEAAllThirdDeptResourceCollection"
+                }
+            },
+            "StorePEAFirstDepartmentRequest": {
+                "title": "StorePEAFirstDepartmentRequest",
+                "description": "Store first level of PEA department request",
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "การไฟฟ้าสูงเนิน"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "StorePEAFirstDepartmentRequest"
+                }
+            },
+            "UpdatePEAFirstDepartmentRequest": {
+                "title": "UpdatePEAFirstDepartmentRequest",
+                "description": "Update first level of PEA department request",
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "การไฟฟ้าสูงเนิน"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UpdatePEAFirstDepartmentRequest"
+                }
+            },
+            "PEAFirstDeptResourceCollection": {
+                "title": "PEAFirstDeptResourceCollection",
+                "description": "First level of PEA departments",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "การไฟฟ้านครราชสีมา"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "created_at",
+                        "type": "string",
+                        "example": "2021-09-05 12:00:00"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "updated_at",
+                        "type": "string",
+                        "example": "2021-09-06 12:00:00"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "PEAFirstDeptResourceCollection"
+                }
+            },
+            "StorePEASecondDepartmentRequest": {
+                "title": "StorePEASecondDepartmentRequest",
+                "description": "Store second level of PEA department request",
+                "properties": {
+                    "pea_dept_id": {
+                        "title": "First PEA department ID",
+                        "description": "First PEA department ID",
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "การไฟฟ้าโนนไทย"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "StorePEASecondDepartmentRequest"
+                }
+            },
+            "UpdatePEASecondDepartmentRequest": {
+                "title": "UpdatePEASecondDepartmentRequest",
+                "description": "Update second level of PEA department request",
+                "properties": {
+                    "pea_dept_id": {
+                        "title": "First PEA department ID",
+                        "description": "First PEA department ID",
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "การไฟฟ้าสูงเนิน"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UpdatePEASecondDepartmentRequest"
+                }
+            },
+            "PEASecondDeptResourceCollection": {
+                "title": "PEASecondDeptResourceCollection",
+                "description": "Second level of PEA departments",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "การไฟฟ้าสีคิ้ว"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "created_at",
+                        "type": "string",
+                        "example": "2021-09-05 12:00:00"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "updated_at",
+                        "type": "string",
+                        "example": "2021-09-06 12:00:00"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "PEASecondDeptResourceCollection"
+                }
+            },
+            "StorePEAThirdDepartmentRequest": {
+                "title": "StorePEAThirdDepartmentRequest",
+                "description": "Store third level of PEA department request",
+                "properties": {
+                    "pea_dept_id": {
+                        "title": "Second PEA department ID",
+                        "description": "Second PEA department ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "การไฟฟ้าเมืองคง"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "StorePEAThirdDepartmentRequest"
+                }
+            },
+            "UpdatePEAThirdDepartmentRequest": {
+                "title": "UpdatePEAThirdDepartmentRequest",
+                "description": "Update third level of PEA department request",
+                "properties": {
+                    "pea_dept_id": {
+                        "title": "Second PEA department ID",
+                        "description": "Second PEA department ID",
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "การไฟฟ้าสูงเนิน"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UpdatePEAThirdDepartmentRequest"
+                }
+            },
+            "PEAThirdDeptResourceCollection": {
+                "title": "PEAThirdDeptResourceCollection",
+                "description": "Third level of PEA departments",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "การไฟฟ้าโนนสูง"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "created_at",
+                        "type": "string",
+                        "example": "2021-09-05 12:00:00"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "updated_at",
+                        "type": "string",
+                        "example": "2021-09-06 12:00:00"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "PEAThirdDeptResourceCollection"
+                }
+            },
+            "ErrorResource": {
+                "title": "ErrorResource",
+                "description": "API response error",
+                "properties": {
+                    "success": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "code": {
+                        "title": "code",
+                        "description": "code",
+                        "type": "integer",
+                        "example": 500
+                    },
+                    "message": {
+                        "title": "message",
+                        "description": "message",
+                        "type": "string",
+                        "example": "Something went wrong."
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ErrorResource"
+                }
+            },
+            "ForbiddenResource": {
+                "title": "ForbiddenResource",
+                "description": "API response error (forbidden)",
+                "properties": {
+                    "success": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "code": {
+                        "title": "code",
+                        "description": "code",
+                        "type": "integer",
+                        "example": 403
+                    },
+                    "message": {
+                        "title": "message",
+                        "description": "message",
+                        "type": "string",
+                        "example": "Forbidden."
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ForbiddenResource"
+                }
+            },
+            "NotFoundResource": {
+                "title": "NotFoundResource",
+                "description": "API response error (not found)",
+                "properties": {
+                    "success": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "code": {
+                        "title": "code",
+                        "description": "code",
+                        "type": "integer",
+                        "example": 404
+                    },
+                    "message": {
+                        "title": "message",
+                        "description": "message",
+                        "type": "string",
+                        "example": "Not found."
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "NotFoundResource"
+                }
+            },
+            "SuccessResource": {
+                "title": "SuccessResource",
+                "description": "API response success",
+                "properties": {
+                    "success": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "code": {
+                        "title": "code",
+                        "description": "code",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "title": "message",
+                        "description": "message",
+                        "type": "string",
+                        "example": "Successfully."
+                    },
+                    "data": {
+                        "title": "data",
+                        "description": "data",
+                        "type": "object"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "SuccessResource"
+                }
+            },
+            "SuccessWithNoDataResource": {
+                "title": "SuccessWithNoDataResource",
+                "description": "API response success with no return data",
+                "properties": {
+                    "success": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "code": {
+                        "title": "code",
+                        "description": "code",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "title": "message",
+                        "description": "message",
+                        "type": "string",
+                        "example": "Successfully."
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "SuccessWithNoDataResource"
+                }
+            },
+            "UnauthenticatedResource": {
+                "title": "UnauthenticatedResource",
+                "description": "API response error (unauthenticaed)",
+                "properties": {
+                    "message": {
+                        "title": "message",
+                        "description": "message",
+                        "type": "string",
+                        "example": "Unauthenticated."
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UnauthenticatedResource"
+                }
+            },
+            "UnauthorizedResource": {
+                "title": "UnauthorizedResource",
+                "description": "API response error (unauthorized)",
+                "properties": {
+                    "success": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "code": {
+                        "title": "code",
+                        "description": "code",
+                        "type": "integer",
+                        "example": 401
+                    },
+                    "message": {
+                        "title": "message",
+                        "description": "message",
+                        "type": "string",
+                        "example": "Unauthorized."
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UnauthorizedResource"
+                }
+            },
+            "UnprocessableResource": {
+                "title": "UnprocessableResource",
+                "description": "API response error (unprocessable)",
+                "properties": {
+                    "message": {
+                        "title": "message",
+                        "description": "message",
+                        "type": "string",
+                        "example": "The given data was invalid."
+                    },
+                    "errors": {
+                        "title": "errors",
+                        "description": "error message(s)",
+                        "type": "object"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UnprocessableResource"
                 }
             }
         },

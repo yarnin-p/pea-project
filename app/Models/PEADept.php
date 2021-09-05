@@ -6,14 +6,13 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use phpseclib3\File\ASN1\Maps\Attribute;
 
 class PEADept extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $table = 'pea_departments';
-
-    protected $primaryKey = 'id';
 
     protected $fillable = [
         'id', 'name', 'created_at', 'updated_at', 'deleted_at'

@@ -11,8 +11,6 @@ class PEADeptDimensionFiles extends Model
 
     protected $table = 'pea_dept_dimension_files';
 
-    protected $primaryKey = 'id';
-
     protected $fillable = [
         'id', 'pea_dept_dimension_id', 'url', 'created_at'
     ];

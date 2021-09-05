@@ -11,10 +11,7 @@ class PEAThirdDept extends Model
 {
     use HasFactory, SoftDeletes;
 
-
     protected $table = 'pea_third_departments';
-
-    protected $primaryKey = 'id';
 
     protected $fillable = [
         'id', 'pea_dept_id', 'name', 'created_at', 'updated_at', 'deleted_at'

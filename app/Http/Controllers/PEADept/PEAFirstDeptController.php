@@ -4,8 +4,9 @@ namespace App\Http\Controllers\PEADept;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PEADept\StorePeaDepartmentRequest;
+use App\Http\Requests\PEADept\UpdatePEADepartmentRequest;
 use App\Http\Resources\PEADept\PEAAllDeptResourceCollection;
-use App\Http\Resources\PEADept\PEADeptResourceCollection;
+use App\Http\Resources\PEADept\PEAFirstDeptResourceCollection;
 use App\Http\Resources\PEADept\PEAFirstDeptResource;
 use App\Services\PEADept\IPEAService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -15,7 +16,7 @@ use App\Models\PEADept;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
-class PEADeptController extends Controller
+class PEAFirstDeptController extends Controller
 {
 
     /**
@@ -39,95 +40,6 @@ class PEADeptController extends Controller
         $this->ctrlName = 'PEADeptController';
     }
 
-    /**
-     *  @OA\Get(
-     *      path="/pea-departments/all",
-     *      operationId="getAllLevelPEADepartments",
-     *      tags={"PEA Departments"},
-     *      summary="Get list of all level PEA departments",
-     *      security={ {"bearerAuth": {} }},
-     *      description="Returns list of all level PEA departments",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful Operation",
-     *          @OA\JsonContent(
-     *              @OA\Property(
-     *                  property="success",
-     *                  type="boolean",
-     *                  example=true
-     *              ),
-     *              @OA\Property(
-     *                  property="code",
-     *                  type="integer",
-     *                  example=200
-     *              ),
-     *              @OA\Property(
-     *                  property="message",
-     *                  type="string",
-     *                  example="Successfully"
-     *              ),
-     *              @OA\Property(
-     *                  property="data",
-     *                  type="array",
-     *                  @OA\Items(ref="#/components/schemas/PEAAllDeptResourceCollection")
-     *              )
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthenticated",
-     *          @OA\JsonContent(
-     *              @OA\Property(
-     *                  property="message",
-     *                  type="string",
-     *                  example="Unauthenticated."
-     *              ),
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Not found",
-     *          @OA\JsonContent(
-     *              @OA\Property(
-     *                  property="success",
-     *                  type="boolean",
-     *                  example=false
-     *              ),
-     *              @OA\Property(
-     *                  property="code",
-     *                  type="integer",
-     *                  example=404
-     *              ),
-     *              @OA\Property(
-     *                  property="message",
-     *                  type="string",
-     *                  example="Not found"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=500,
-     *          description="Internal server error",
-     *          @OA\JsonContent(
-     *              @OA\Property(
-     *                  property="success",
-     *                  type="boolean",
-     *                  example=false
-     *              ),
-     *              @OA\Property(
-     *                  property="code",
-     *                  type="integer",
-     *                  example=500
-     *              ),
-     *              @OA\Property(
-     *                  property="message",
-     *                  type="string",
-     *                  example="Internal server error"
-     *              )
-     *          )
-     *      )
-     *  )
-     */
     public function all(Request $request)
     {
         try {
@@ -158,7 +70,7 @@ class PEADeptController extends Controller
         }
 
         if (!$PEADepartments->isEmpty()) {
-            return Response::success(new PEADeptResourceCollection($PEADepartments));
+            return Response::success(new PEAFirstDeptResourceCollection($PEADepartments));
         }
 
         return Response::notFound('No document(s) found');
@@ -202,18 +114,21 @@ class PEADeptController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param $id
+     * @param UpdatePEADepartmentRequest $request
+     * @param PEADept $PEAFirstDept
      * @return mixed
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePEADepartmentRequest $request, PEADept $PEAFirstDept)
     {
         $validatedData = $request->validated();
         try {
-            PEADept::where('id', $id)->update($validatedData);
+            PEADept::where('id', $PEAFirstDept->id)->update($validatedData);
         } catch (QueryException $exception) {
             Log::error($this->ctrlName . '@' . $request->method() . ': [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Update PEA first level department failed.");
+        } catch (ModelNotFoundException $exception) {
+            Log::error($this->ctrlName . '@' . $request->method() . ': [' . $exception->getCode() . '] ' . $exception->getMessage());
+            return Response::notFound('No document(s) found');
         }
 
         return Response::updated();
@@ -224,10 +139,10 @@ class PEADeptController extends Controller
      * @param $id
      * @return mixed
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, PEADept $PEAFirstDept)
     {
         try {
-            PEADept::where('id', $id)->delete();
+            $PEAFirstDept->delete();
         } catch (QueryException $exception) {
             Log::error($this->ctrlName . '@' . $request->method() . ': [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Delete PEA first level department failed.");

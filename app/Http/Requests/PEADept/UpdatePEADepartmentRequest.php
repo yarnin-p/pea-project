@@ -30,7 +30,7 @@ class UpdatePEADepartmentRequest extends FormRequest
             'name' => [
                 'required',
                 Rule::unique('pea_departments', 'name')
-                    ->whereNot('id', $this->route('pea-dept-id'))
+                    ->whereNot('id', $this->route('PEAFirstDept')->id)
                     ->whereNull('deleted_at')
             ],
         ];

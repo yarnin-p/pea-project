@@ -4,6 +4,7 @@ namespace App\Http\Resources\PEADept;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
+
 class PEASecondDeptResourceCollection extends ResourceCollection
 {
     /**

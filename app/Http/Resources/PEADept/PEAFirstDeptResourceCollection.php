@@ -2,12 +2,13 @@
 
 namespace App\Http\Resources\PEADept;
 
-use Carbon\Carbon;
+
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class PEADeptResourceCollection extends ResourceCollection
+class PEAFirstDeptResourceCollection extends ResourceCollection
 {
-    /**¬
+
+    /**
      * Transform the resource collection into an array.
      *
      * @param \Illuminate\Http\Request $request
