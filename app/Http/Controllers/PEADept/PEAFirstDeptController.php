@@ -31,13 +31,12 @@ class PEAFirstDeptController extends Controller
 
 
     /**
-     * PEADeptController constructor.
      * @param IPEAService $PEADeptService
      */
     public function __construct(IPEAService $PEADeptService)
     {
         $this->PEADeptService = $PEADeptService;
-        $this->ctrlName = 'PEADeptController';
+        $this->ctrlName = 'PEAFirstDeptController';
     }
 
     public function all(Request $request)
@@ -75,7 +74,6 @@ class PEAFirstDeptController extends Controller
 
         return Response::notFound('No document(s) found');
     }
-
 
     /**
      * @param StorePeaDepartmentRequest $request

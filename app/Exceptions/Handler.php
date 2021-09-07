@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -49,6 +50,10 @@ class Handler extends ExceptionHandler
             }
 
             return Response::notFound('Route not found');
+        });
+
+        $this->renderable(function (ValidationException $e) {
+            return Response::unprocessableEntity($e->errors(), $e->getMessage());
         });
     }
 }

@@ -28,7 +28,7 @@ Route::prefix('v1')->name('api.')->group(function () {
                 Route::get('all', [PEAFirstDeptController::class, 'all'])->name('list-all-pea-dept');
 
                 Route::name('first.')->prefix('first')->group(function () {
-                    Route::apiResource('', 'PEADept\PEADeptController')
+                    Route::apiResource('', 'PEADept\PEAFirstDeptController')
                         ->parameters(['' => 'PEAFirstDept']);
                 });
 
@@ -53,6 +53,15 @@ Route::prefix('v1')->name('api.')->group(function () {
                     Route::apiResource('', 'PEADeptDimension\PEADeptDimensionFileController')
                         ->parameters(['' => 'id']);
                 });
+            });
+    });
+
+    Route::middleware([])->group(function () {
+        Route::name('permissions.')
+            ->prefix('permissions')
+            ->group(function () {
+                Route::apiResource('', 'Permission\PermissionController')
+                    ->parameters(['' => 'permission']);
             });
     });
 });

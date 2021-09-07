@@ -18,6 +18,202 @@
         }
     ],
     "paths": {
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Store new user by given data",
+                "description": "Store new user by given data",
+                "operationId": "register",
+                "requestBody": {
+                    "description": "Store new user by given data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreRegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessResource"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "properties": {
+                                                        "user": {
+                                                            "$ref": "#/components/schemas/RegisterResource"
+                                                        },
+                                                        "access_token": {
+                                                            "title": "access_token",
+                                                            "description": "access_token",
+                                                            "type": "string",
+                                                            "example": "$1212dk.d8sh837.434erd.kejw8"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnprocessableResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get login by given email and password",
+                "description": "Get login by given email and password",
+                "operationId": "getLogin",
+                "requestBody": {
+                    "description": "Login by given email and password",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GetLoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SuccessResource"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "properties": {
+                                                        "user": {
+                                                            "$ref": "#/components/schemas/LoginResource"
+                                                        },
+                                                        "access_token": {
+                                                            "title": "access_token",
+                                                            "description": "access_token",
+                                                            "type": "string",
+                                                            "example": "$1212dk.d8sh837.434erd.kejw8"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UnprocessableResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/pea-departments/all": {
             "get": {
                 "tags": [
@@ -1490,6 +1686,154 @@
     },
     "components": {
         "schemas": {
+            "GetLoginRequest": {
+                "title": "GetLoginRequest",
+                "description": "Get login request",
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "email",
+                        "type": "string",
+                        "example": "john.d@gmail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "password",
+                        "type": "string",
+                        "example": "secret12"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "GetLoginRequest"
+                }
+            },
+            "StoreRegisterRequest": {
+                "title": "StoreRegisterRequest",
+                "description": "Register",
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "email",
+                        "type": "string",
+                        "example": "john.d@gmail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "password",
+                        "type": "string",
+                        "example": "secret12"
+                    },
+                    "password_confirmation": {
+                        "title": "password_confirmation",
+                        "description": "password_confirmation",
+                        "type": "string",
+                        "example": "secret12"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "StoreRegisterRequest"
+                }
+            },
+            "LoginResource": {
+                "title": "LoginResource",
+                "description": "Login response",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "email",
+                        "type": "string",
+                        "example": "john.d@gmail.com"
+                    },
+                    "email_verified_at": {
+                        "title": "email_verified_at",
+                        "description": "email_verified_at",
+                        "type": "string",
+                        "example": "2021-09-06 12:00:00"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "created_at",
+                        "type": "string",
+                        "example": "2021-09-05 12:00:00"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "updated_at",
+                        "type": "string",
+                        "example": "2021-09-06 12:00:00"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "LoginResource"
+                }
+            },
+            "RegisterResource": {
+                "title": "RegisterResource",
+                "description": "Register new user resource",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "email",
+                        "type": "string",
+                        "example": "john.d@gmail.com"
+                    },
+                    "email_verified_at": {
+                        "title": "email_verified_at",
+                        "description": "email_verified_at",
+                        "type": "string",
+                        "example": "2021-09-06 12:00:00"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "created_at",
+                        "type": "string",
+                        "example": "2021-09-05 12:00:00"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "updated_at",
+                        "type": "string",
+                        "example": "2021-09-06 12:00:00"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "RegisterResource"
+                }
+            },
             "PEAAllFirstDeptResourceCollection": {
                 "title": "PEAAllFirstDeptResourceCollection",
                 "description": "First level of PEA departments",
@@ -2023,6 +2367,18 @@
                 "title": "UnprocessableResource",
                 "description": "API response error (unprocessable)",
                 "properties": {
+                    "success": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "code": {
+                        "title": "code",
+                        "description": "code",
+                        "type": "integer",
+                        "example": 422
+                    },
                     "message": {
                         "title": "message",
                         "description": "message",

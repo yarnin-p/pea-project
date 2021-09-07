@@ -28,7 +28,7 @@ class ResponseAPIServiceProvider extends ServiceProvider
             return response()->json([
                 'success' => true,
                 'code' => 200,
-                'message' => 'Successfully',
+                'message' => 'Successfully.',
                 'data' => $data
             ]);
         });
@@ -37,7 +37,7 @@ class ResponseAPIServiceProvider extends ServiceProvider
             return response()->json([
                 'success' => true,
                 'code' => 201,
-                'message' => 'Created',
+                'message' => 'Created.',
             ], 201);
         });
 
@@ -45,7 +45,7 @@ class ResponseAPIServiceProvider extends ServiceProvider
             return response()->json([
                 'success' => true,
                 'code' => 200,
-                'message' => 'Updated',
+                'message' => 'Updated.',
             ]);
         });
 
@@ -53,7 +53,7 @@ class ResponseAPIServiceProvider extends ServiceProvider
             return response()->json([
                 'success' => true,
                 'code' => 200,
-                'message' => 'Deleted',
+                'message' => 'Deleted.',
             ]);
         });
 
@@ -87,6 +87,15 @@ class ResponseAPIServiceProvider extends ServiceProvider
                 'code' => 401,
                 'message' => "Unauthorized " . $errMsg ? "Unauthorized, $errMsg" : "",
             ], 401);
+        });
+
+        Response::macro('unprocessableEntity', function ($errors, $errMsg = "") {
+            return response()->json([
+                'success' => false,
+                'code' => 422,
+                'message' => $errMsg,
+                'errors' => $errors,
+            ], 422);
         });
     }
 }

@@ -3,52 +3,62 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\GetLoginRequest;
+use App\Http\Requests\Auth\StoreRegisterRequest;
+use App\Http\Resources\Auth\LoginResource;
+use App\Http\Resources\Auth\RegisterResource;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
 
     /**
-     * @param Request $request
-     * @return mixed
+     * @var string
      */
-    public function register(Request $request)
+    private string $ctrlName;
+
+    public function __construct()
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:55',
-            'email' => 'email|required|unique:users,email',
-            'password' => 'required|confirmed|min:8',
-        ]);
-
-        $validatedData['password'] = bcrypt($request['password']);
-        $user = User::create($validatedData);
-
-        return Response::success([
-            'user' => $user,
-            'access_token' => $user->createToken('authToken')->accessToken
-        ]);
+        $this->ctrlName = 'AuthController';
     }
 
     /**
-     * @param Request $request
+     * @param StoreRegisterRequest $request
      * @return mixed
      */
-    public function login(Request $request)
+    public function register(StoreRegisterRequest $request)
     {
-        $loginData = $request->validate([
-            'email' => 'email|required',
-            'password' => 'required'
-        ]);
-
-        if (!auth()->attempt($loginData)) {
-            return Response::unauthorized("invalid Credentials");
+        $validatedData = $request->validated();
+        $validatedData['password'] = bcrypt($request['password']);
+        try {
+            $user = User::create($validatedData);
+        } catch (QueryException $exception) {
+            Log::error($this->ctrlName . '@' . $request->method() . ': [' . $exception->getCode() . '] ' . $exception->getMessage());
+            return Response::error("Couldn't query create new user (via register)");
         }
 
-        return Response::success([
-            'user' => auth()->user(),
-            'access_token' => auth()->user()->createToken('authToken')->accessToken
-        ]);
+        return Response::success(new RegisterResource($user));
+    }
+
+    /**
+     * @param GetLoginRequest $request
+     * @return mixed
+     */
+    public function login(GetLoginRequest $request)
+    {
+        $validatedData = $request->validated();
+        try {
+            if (!auth()->attempt($validatedData)) {
+                return Response::unauthorized("invalid Credentials");
+            }
+        } catch (QueryException $exception) {
+            Log::error($this->ctrlName . '@' . $request->method() . ': [' . $exception->getCode() . '] ' . $exception->getMessage());
+            return Response::error("Couldn't query login user");
+        }
+
+        return Response::success(new LoginResource(auth()));
     }
 }
