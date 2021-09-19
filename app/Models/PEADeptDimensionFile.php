@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PEADeptDimensionFiles extends Model
+class PEADeptDimensionFile extends Model
 {
     use HasFactory;
 
@@ -21,6 +21,6 @@ class PEADeptDimensionFiles extends Model
 
     public function PEADeptDimension()
     {
-        return $this->hasOne(PEADeptDimensions::class, 'id', 'pea_dept_dimension_id');
+        return $this->hasOne(PEADeptDimension::class, 'id', 'pea_dept_dimension_id');
     }
 }

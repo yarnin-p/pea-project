@@ -5,11 +5,10 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserPermissions extends Model
+class UserPermission extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = 'user_permissions';
 
@@ -21,6 +20,8 @@ class UserPermissions extends Model
         'created_at' => 'datetime'
     ];
 
+    public $timestamps = false;
+
     /**
      * @param $value
      * @return string
@@ -28,5 +29,15 @@ class UserPermissions extends Model
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
+
+    public function permissions()
+    {
+        return $this->hasOne(Permission::class, 'id', 'permission_id');
+    }
+
+    public function users()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

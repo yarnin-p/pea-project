@@ -29,7 +29,6 @@ class PEAFirstDeptController extends Controller
      */
     private string $ctrlName;
 
-
     /**
      * @param IPEAService $PEADeptService
      */

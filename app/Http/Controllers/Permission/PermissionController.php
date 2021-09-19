@@ -7,7 +7,7 @@ use App\Http\Requests\Permission\StorePermissionRequest;
 use App\Http\Requests\Permission\UpdatePermissionRequest;
 use App\Http\Resources\Permission\PermissionResource;
 use App\Http\Resources\Permission\PermissionResourceCollection;
-use App\Models\Permissions;
+use App\Models\Permission;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -36,7 +36,7 @@ class PermissionController extends Controller
     public function index(Request $request)
     {
         try {
-            $permissions = Permissions::all();
+            $permissions = Permission::all();
         } catch (QueryException $exception) {
             Log::error($this->ctrlName . '@' . $request->method() . ': [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Couldn't query permission");
@@ -57,7 +57,7 @@ class PermissionController extends Controller
     public function show(Request $request, $id)
     {
         try {
-            $permission = Permissions::where('id', $id)->firstOrFail();
+            $permission = Permission::where('id', $id)->firstOrFail();
         } catch (QueryException $exception) {
             Log::error($this->ctrlName . '@' . $request->method() . ': [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Couldn't show permission with given ID");
@@ -76,7 +76,7 @@ class PermissionController extends Controller
     public function store(StorePermissionRequest $request)
     {
         try {
-            Permissions::create($request->validated());
+            Permission::create($request->validated());
         } catch (QueryException $exception) {
             Log::error($this->ctrlName . '@' . $request->method() . ': [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Couldn't create permission");
@@ -87,14 +87,14 @@ class PermissionController extends Controller
 
     /**
      * @param UpdatePermissionRequest $request
-     * @param Permissions $permission
+     * @param Permission $permission
      * @return mixed
      */
-    public function update(UpdatePermissionRequest $request, Permissions $permission)
+    public function update(UpdatePermissionRequest $request, Permission $permission)
     {
         $validatedData = $request->validated();
         try {
-            Permissions::where('id', $permission->id)->update($validatedData);
+            Permission::where('id', $permission->id)->update($validatedData);
         } catch (QueryException $exception) {
             Log::error($this->ctrlName . '@' . $request->method() . ': [' . $exception->getCode() . '] ' . $exception->getMessage());
             return Response::error("Update permission failed.");
@@ -108,10 +108,10 @@ class PermissionController extends Controller
 
     /**
      * @param Request $request
-     * @param Permissions $permission
+     * @param Permission $permission
      * @return mixed
      */
-    public function destroy(Request $request, Permissions $permission)
+    public function destroy(Request $request, Permission $permission)
     {
         try {
             $permission->delete();
