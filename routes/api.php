@@ -71,6 +71,21 @@ Route::prefix('v1')->name('api.')->group(function () {
                     Route::apiResource('', 'PEADeptDimension\PEAFirstDeptDimensionController')
                         ->parameters(['' => 'firstDimension']);
                 });
+
+                Route::name('second.')->prefix('second')->group(function () {
+                    Route::apiResource('', 'PEADeptDimension\PEASecondDeptDimensionController')
+                        ->parameters(['' => 'secondDimension']);
+                });
+
+                Route::name('third.')->prefix('third')->group(function () {
+                    Route::apiResource('', 'PEADeptDimension\PEAThirdDeptDimensionController')
+                        ->parameters(['' => 'thirdDimension']);
+                });
+
+                Route::name('fourth.')->prefix('fourth')->group(function () {
+                    Route::apiResource('', 'PEADeptDimension\PEAFourthDeptDimensionController')
+                        ->parameters(['' => 'fourthDimension']);
+                });
             });
     });
 });
