@@ -43,18 +43,6 @@ Route::prefix('v1')->name('api.')->group(function () {
                         ->parameters(['' => 'PEAThirdDept']);
                 });
             });
-
-        Route::name('department-dimensions.')
-            ->prefix('department-dimensions')
-            ->group(function () {
-                Route::apiResource('', 'PEADeptDimension\PEADeptDimensionController')
-                    ->parameters(['' => 'id']);
-
-                Route::name('files.')->prefix('files')->group(function () {
-                    Route::apiResource('', 'PEADeptDimension\PEADeptDimensionFileController')
-                        ->parameters(['' => 'id']);
-                });
-            });
     });
 
     Route::middleware([])->group(function () {
@@ -72,6 +60,17 @@ Route::prefix('v1')->name('api.')->group(function () {
             ->group(function () {
                 Route::apiResource('', 'Permission\UserPermissionController')
                     ->parameters(['' => 'userPermission']);
+            });
+    });
+
+    Route::middleware([])->group(function () {
+        Route::name('dept-dimensions.')
+            ->prefix('dept-dimensions')
+            ->group(function () {
+                Route::name('first.')->prefix('first')->group(function () {
+                    Route::apiResource('', 'PEADeptDimension\PEAFirstDeptDimensionController')
+                        ->parameters(['' => 'firstDimension']);
+                });
             });
     });
 });

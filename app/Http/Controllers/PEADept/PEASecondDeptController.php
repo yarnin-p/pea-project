@@ -23,8 +23,7 @@ class PEASecondDeptController extends Controller
     private string $ctrlName;
 
     /**
-     * PEADeptController constructor.
-     * @param IPEAService $PEADeptService
+     *
      */
     public function __construct()
     {
