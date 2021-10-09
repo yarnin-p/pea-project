@@ -16,12 +16,13 @@ class CreatePeaSecondDepartments extends Migration
     {
         Schema::create('pea_second_departments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pea_dept_id');
-            $table->string('name');
+            $table->string('pea_dept_id');
+            $table->string('name')->unique();
+            $table->string('dept_code')->unique();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
-            $table->foreign('pea_dept_id')->references('id')->on('pea_departments')->onDelete('cascade');
+//            $table->foreign('pea_dept_id')->references('dept_code')->on('pea_departments')->onDelete('cascade');
         });
     }
 

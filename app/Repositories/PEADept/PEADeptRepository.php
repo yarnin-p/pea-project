@@ -27,9 +27,9 @@ class PEADeptRepository extends BaseRepository implements IPEADeptRepository
          */
 
         return $this->PEADept::with(['PEASecondDepts' => function ($PEASecondQuery) {
-            $PEASecondQuery->select('id', 'pea_dept_id', 'name')
+            $PEASecondQuery->select('id', 'dept_code', 'pea_dept_id', 'name')
                 ->with(['PEAThirdDepts' => function ($PEAThirdQuery) {
-                    $PEAThirdQuery->select('id', 'pea_dept_id', 'name');
+                    $PEAThirdQuery->select('id', 'dept_code', 'pea_dept_id', 'name');
                 }]);
         }])->get();
     }

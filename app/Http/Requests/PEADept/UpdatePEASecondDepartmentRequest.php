@@ -33,9 +33,14 @@ class UpdatePEASecondDepartmentRequest extends FormRequest
             ],
             'pea_dept_id' => [
                 'required',
-                'numeric',
-                Rule::exists('pea_departments', 'id')->whereNull('deleted_at')
+                Rule::exists('pea_departments', 'dept_code')->whereNull('deleted_at')
             ],
+            'dept_code' => [
+                'required',
+                Rule::unique('pea_second_departments', 'dept_code')
+                    ->whereNot('id', $this->route('PEASecondDept')->id)
+                    ->whereNull('deleted_at')
+            ]
         ];
     }
 
@@ -44,9 +49,10 @@ class UpdatePEASecondDepartmentRequest extends FormRequest
         return [
             'name.required' => 'กรุณาใส่ชื่อสำนักงาน',
             'name.unique' => 'ชื่อสำนักงานมีอยู่ในระบบแล้ว',
-            'pea_dept_id.required' => 'กรุณาระบุไอดีสำนักงานระดับแรก',
-            'pea_dept_id.numeric' => 'ไอดีสำนักงานระดับแรกต้องเป็นตัวเลขเท่านั้น',
-            'pea_dept_id.exists' => 'ไอดีสำนักงานระดับแรกไม่มีอยู่ในระบบ'
+            'pea_dept_id.required' => 'กรุณาระบุรหัสสำนักงานระดับแรก',
+            'pea_dept_id.exists' => 'รหัสสำนักงานระดับแรกไม่มีอยู่ในระบบ',
+            'dept_code.required' => 'กรุณาใส่รหัสสำนักงาน',
+            'dept_code.unique' => 'รหัสสำนักงานมีอยู่ในระบบแล้ว'
         ];
     }
 }

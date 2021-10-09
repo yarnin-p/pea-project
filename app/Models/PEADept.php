@@ -15,7 +15,7 @@ class PEADept extends Model
     protected $table = 'pea_departments';
 
     protected $fillable = [
-        'id', 'name', 'created_at', 'updated_at', 'deleted_at'
+        'id', 'name', 'dept_code', 'created_at', 'updated_at', 'deleted_at'
     ];
 
     protected $casts = [
@@ -45,6 +45,6 @@ class PEADept extends Model
 
     public function PEASecondDepts()
     {
-        return $this->hasMany(PEASecondDept::class, 'pea_dept_id', 'id');
+        return $this->hasMany(PEASecondDept::class, 'pea_dept_id', 'dept_code');
     }
 }

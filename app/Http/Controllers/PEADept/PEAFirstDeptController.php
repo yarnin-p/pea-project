@@ -8,6 +8,7 @@ use App\Http\Requests\PEADept\UpdatePEADepartmentRequest;
 use App\Http\Resources\PEADept\PEAAllDeptResourceCollection;
 use App\Http\Resources\PEADept\PEAFirstDeptResourceCollection;
 use App\Http\Resources\PEADept\PEAFirstDeptResource;
+use App\Models\PEASecondDept;
 use App\Services\PEADept\IPEAService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;

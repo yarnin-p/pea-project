@@ -84,6 +84,11 @@ class PEAFirstDeptDimensionController extends Controller
         return Response::created();
     }
 
+    /**
+     * @param UpdateFirstDimensionRequest $request
+     * @param FirstDimension $firstDimension
+     * @return mixed
+     */
     public function update(UpdateFirstDimensionRequest $request, FirstDimension $firstDimension)
     {
         $validatedData = $request->validated();

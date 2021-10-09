@@ -27,13 +27,16 @@ class StorePEAThirdDepartmentRequest extends FormRequest
         return [
             'pea_dept_id' => [
                 'required',
-                'numeric',
-                Rule::exists('pea_second_departments', 'id')->whereNull('deleted_at')
+                Rule::exists('pea_second_departments', 'dept_code')->whereNull('deleted_at')
             ],
             'name' => [
                 'required',
                 Rule::unique('pea_third_departments', 'name')->whereNull('deleted_at')
             ],
+            'dept_code' => [
+                'required',
+                Rule::unique('pea_third_departments', 'dept_code')->whereNull('deleted_at')
+            ]
         ];
     }
 
@@ -42,9 +45,10 @@ class StorePEAThirdDepartmentRequest extends FormRequest
         return [
             'name.required' => 'กรุณาใส่ชื่อสำนักงาน',
             'name.unique' => 'ชื่อสำนักงานมีอยู่ในระบบแล้ว',
-            'pea_dept_id.required' => 'กรุณาระบุไอดีสำนักงานระดับสอง',
-            'pea_dept_id.numeric' => 'ไอดีสำนักงานระดับสองต้องเป็นตัวเลขเท่านั้น',
-            'pea_dept_id.exists' => 'ไอดีสำนักงานระดับสองไม่มีอยู่ในระบบ'
+            'pea_dept_id.required' => 'กรุณาระบุรหัสสำนักงานระดับสอง',
+            'pea_dept_id.exists' => 'รหัสสำนักงานระดับสองไม่มีอยู่ในระบบ',
+            'dept_code.required' => 'กรุณาใส่รหัสสำนักงาน',
+            'dept_code.unique' => 'รหัสสำนักงานมีอยู่ในระบบแล้ว'
         ];
     }
 }

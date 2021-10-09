@@ -31,6 +31,10 @@ class StorePEADepartmentRequest extends FormRequest
                 'required',
                 Rule::unique('pea_departments', 'name')->whereNull('deleted_at')
             ],
+            'dept_code' => [
+                'required',
+                Rule::unique('pea_departments', 'dept_code')->whereNull('deleted_at')
+            ]
         ];
     }
 
@@ -38,7 +42,9 @@ class StorePEADepartmentRequest extends FormRequest
     {
         return [
             'name.required' => 'กรุณาใส่ชื่อสำนักงาน',
-            'name.unique' => 'ชื่อสำนักงานมีอยู่ในระบบแล้ว'
+            'name.unique' => 'ชื่อสำนักงานมีอยู่ในระบบแล้ว',
+            'dept_code.required' => 'กรุณาใส่รหัสสำนักงาน',
+            'dept_code.unique' => 'รหัสสำนักงานมีอยู่ในระบบแล้ว'
         ];
     }
 }

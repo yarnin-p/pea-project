@@ -14,7 +14,7 @@ class PEAThirdDept extends Model
     protected $table = 'pea_third_departments';
 
     protected $fillable = [
-        'id', 'pea_dept_id', 'name', 'created_at', 'updated_at', 'deleted_at'
+        'id', 'pea_dept_id', 'name', 'dept_code', 'created_at', 'updated_at', 'deleted_at'
     ];
 
     protected $casts = [
@@ -43,6 +43,6 @@ class PEAThirdDept extends Model
 
     public function PEASecondDept()
     {
-        return $this->hasOne(PEASecondDept::class, 'id', 'pea_dept_id');
+        return $this->hasOne(PEASecondDept::class, 'dept_code', 'pea_dept_id');
     }
 }

@@ -33,6 +33,12 @@ class UpdatePEADepartmentRequest extends FormRequest
                     ->whereNot('id', $this->route('PEAFirstDept')->id)
                     ->whereNull('deleted_at')
             ],
+            'dept_code' => [
+                'required',
+                Rule::unique('pea_departments', 'dept_code')
+                    ->whereNot('id', $this->route('PEAFirstDept')->id)
+                    ->whereNull('deleted_at')
+            ]
         ];
     }
 
@@ -40,7 +46,9 @@ class UpdatePEADepartmentRequest extends FormRequest
     {
         return [
             'name.required' => 'กรุณาใส่ชื่อสำนักงาน',
-            'name.unique' => 'ชื่อสำนักงานมีอยู่ในระบบแล้ว'
+            'name.unique' => 'ชื่อสำนักงานมีอยู่ในระบบแล้ว',
+            'dept_code.required' => 'กรุณาใส่รหัสสำนักงาน',
+            'dept_code.unique' => 'รหัสสำนักงานมีอยู่ในระบบแล้ว'
         ];
     }
 }
