@@ -1,0 +1,40 @@
+version: "3.7"
+
+#networks:
+#    default:
+#        name: benchmark-network
+
+services:
+    dev-mariadb:
+        image: mariadb:10
+        container_name: dev-mariadb
+        restart: always
+        hostname: dev-mariadb
+        environment:
+            TZ: Asia/Bangkok
+            MYSQL_ROOT_HOST: '%'
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_DATABASE: db
+            MYSQL_USER: root
+            MYSQL_PASSWORD: secret
+        ports:
+            - 3309:3306
+#        networks:
+#            - default
+        volumes:
+            - ./volumes/mysql/data:/var/lib/mysql
+
+#    dev-benchmark-sqlsrv:
+#        image: mcr.microsoft.com/mssql/server
+#        container_name: dev-benchmark-sqlsrv
+#        restart: always
+#        hostname: dev-benchmark-sqlsrv
+#        environment:
+#            SA_PASSWORD: Y@rnin086
+#            ACCEPT_EULA: Y
+#        ports:
+#            - 1433:1433
+#        networks:
+#            - default
+#        volumes:
+#            - ./volumes/sqlsrv/data:/var/opt/mssql/data

@@ -20,7 +20,7 @@ class FirstDimensionsTable extends Migration
             $table->enum('level_dept', ['first', 'second', 'third']);
             $table->unsignedBigInteger('dimension_parent_id');
             $table->string('name');
-            $table->json('raw_data')->nullable();
+            $table->text('raw_data')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
