@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PEADept\PEAFirstDeptController;
+use App\Http\Controllers\PEADeptDimension\DimensionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,7 @@ Route::prefix('v1')->name('api.')->group(function () {
         Route::post('login', [AuthController::class, 'login'])->name('login');
     });
 
-    Route::middleware([])->group(function () {
+    Route::middleware(['cors'])->group(function () {
         Route::name('pea-departments.')
             ->prefix('pea-departments')
             ->group(function () {
@@ -45,7 +46,7 @@ Route::prefix('v1')->name('api.')->group(function () {
             });
     });
 
-    Route::middleware([])->group(function () {
+    Route::middleware(['cors'])->group(function () {
         Route::name('permissions.')
             ->prefix('permissions')
             ->group(function () {
@@ -54,7 +55,7 @@ Route::prefix('v1')->name('api.')->group(function () {
             });
     });
 
-    Route::middleware([])->group(function () {
+    Route::middleware(['cors'])->group(function () {
         Route::name('user-permissions.')
             ->prefix('user-permissions')
             ->group(function () {
@@ -63,10 +64,13 @@ Route::prefix('v1')->name('api.')->group(function () {
             });
     });
 
-    Route::middleware([])->group(function () {
+    Route::middleware(['cors'])->group(function () {
         Route::name('dept-dimensions.')
             ->prefix('dept-dimensions')
             ->group(function () {
+
+                Route::post('upload', [DimensionController::class, 'uploadDimensionFile']);
+
                 Route::name('first.')->prefix('first')->group(function () {
                     Route::apiResource('', 'PEADeptDimension\PEAFirstDeptDimensionController')
                         ->parameters(['' => 'firstDimension']);
